@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import {User} from "../models/UserModel.js";
+import { User } from "../models/UserModel.js";
 
 dotenv.config();
 
@@ -21,12 +21,7 @@ const protect = async (req, res, next) => {
         return res.status(404).json({ message: "User not found" });
       }
 
-      if (!user.verified) {
-        return res
-          .status(403)
-          .json({ message: "Please verify your email first" });
-      }
-
+      //here we're attaching the user object to the request that we decoded from the token so that we can access it in the controller
       req.user = user;
       next();
     } catch (error) {
